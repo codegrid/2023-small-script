@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content'
+
+const posts = await getCollection('posts')
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Post list</title>
+  </head>
+  <body>
+    <ul>
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </body>
+</html>
+<style></style>

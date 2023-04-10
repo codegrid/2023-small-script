@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "linkchecker-demo-site",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -7,9 +7,19 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint --fix '**/*.{js,cjs,mjs,astro}' && prettier --write ."
   },
   "dependencies": {
-    "astro": "^2.1.8"
+    "astro": "^2.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-astro": "^0.26.1",
+    "glob": "^10.0.0",
+    "htmlparser2": "^8.0.2",
+    "prettier": "^2.8.7",
+    "prettier-plugin-astro": "^0.8.0"
   }
 }
