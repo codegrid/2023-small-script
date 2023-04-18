@@ -23,7 +23,7 @@ for (const file of htmlFiles) {
   for (const link of links) {
     const href = link.attribs.href
     const basePath = file.replace(/^.*dist/, '').replace(/index\.html$/, '')
-    const rootPath = href.startsWith('/') ? href : path.normalize(`${basePath}${href}`)
+    const rootPath = href.startsWith('/') ? href : path.join(basePath, href)
     if (!allPages[rootPath] && !allPages[rootPath + '/']) {
       brokenLinks.push(`Broken link: ${href} in ${file}`)
     }
