@@ -5,6 +5,7 @@
 ### 準備
 ```
 npm install
+npm install --prefix ./scripts
 ```
 
 ### デモサイト
