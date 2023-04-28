@@ -1,0 +1,7 @@
+{
+  "type": "commonjs",
+  "dependencies": {
+    "glob": "^10.2.2",
+    "htmlparser2": "^8.0.2"
+  }
+}
