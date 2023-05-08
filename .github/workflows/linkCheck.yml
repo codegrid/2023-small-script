@@ -1,0 +1,49 @@
+name: リンクチェック
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1' # Monday, 0am(UTC+0)
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # コードをチェックアウト
+      - uses: actions/checkout@v3
+
+      # Node.js環境の準備
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+
+      # パッケージのインストールとビルド
+      - name: Install dependencies and build site
+        run: |
+          npm install
+          npm install --prefix ./scripts
+          npm run build
+      - id: linkCheck
+        name: Execute link checker
+        # エラー（リンク切れ）があっても処理を続行する
+        continue-on-error: true
+        # linkCheck.jsを実行し、`console.log()`と`console.error()`の内容をファイルに出力する
+        run: node scripts/linkCheck.js dist 1>output.txt 2>errors.txt
+      - name: Output log to summary
+        # 実行結果をActionsのサマリーに出力
+        run: |
+          today=$(date "+%Y-%m-%d")
+          echo "### Link check ${today}" >> $GITHUB_STEP_SUMMARY
+          while read output; do
+            echo "$output" >> $GITHUB_STEP_SUMMARY
+          done < output.txt
+      - name: Output errors to summary
+        # 前のstepでエラーがあった場合はエラーも出力して`1`で終了
+        if: steps.linkCheck.outcome == 'failure'
+        run: |
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          while read error; do
+            echo "$error" >> $GITHUB_STEP_SUMMARY
+          done < errors.txt
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          exit 1

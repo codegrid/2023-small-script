@@ -49,6 +49,6 @@ if (brokenLinks.length === 0) {
 
 console.log('🚨 Broken links found')
 for (const brokenLink of brokenLinks) {
-  console.log(brokenLink)
+  console.error(brokenLink)
 }
 process.exit(1)
