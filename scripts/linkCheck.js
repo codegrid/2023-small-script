@@ -36,7 +36,7 @@ for (const filePath of filePaths) {
 
     // http(s)://から始まるURL以外で、リンク先ファイルが存在しない場合はリンク切れとして`brokenLinks`に追加する
     if (!/^https?:\/\//.test(href) && !filePaths.has(joinPath(filePath, href))) {
-      // brokenLinks.push(`Broken link: ${href} in ${filePath}`)
+      brokenLinks.push(`Broken link: ${href} in ${filePath}`)
     }
   }
 }
