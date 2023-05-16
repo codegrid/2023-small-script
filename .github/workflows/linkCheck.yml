@@ -34,16 +34,12 @@ jobs:
         run: |
           today=$(date "+%Y-%m-%d")
           echo "### Link check ${today}" >> $GITHUB_STEP_SUMMARY
-          while read output; do
-            echo "$output" >> $GITHUB_STEP_SUMMARY
-          done < output.txt
+          cat output.txt >> $GITHUB_STEP_SUMMARY
       - name: Output errors to summary
-        # 前のstepでエラーがあった場合はエラーも出力して`1`で終了
+        # linkCheckのstepでエラーがあった場合はエラーも出力して`1`で終了
         if: steps.linkCheck.outcome == 'failure'
         run: |
           echo '```' >> $GITHUB_STEP_SUMMARY
-          while read error; do
-            echo "$error" >> $GITHUB_STEP_SUMMARY
-          done < errors.txt
+          cat errors.txt >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           exit 1
